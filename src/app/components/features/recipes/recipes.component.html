@@ -1,1 +1,5 @@
-<p>recipes works!</p>
+<div class="row">
+    <div class="col-md-4" *ngFor="let recipe of recipes">
+            <app-recipe [recipe]="recipe"></app-recipe>
+    </div>
+</div>

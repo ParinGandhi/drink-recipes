@@ -11,13 +11,15 @@ import { FormsModule } from '@angular/forms';
 
 import { ToastrModule } from 'ngx-toastr';
 import { RecipesComponent } from './components/features/recipes/recipes.component';
+import { RecipeComponent } from './components/features/recipes/recipe/recipe.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
     LoginComponent,
-    RecipesComponent
+    RecipesComponent,
+    RecipeComponent
   ],
   imports: [
     BrowserModule,

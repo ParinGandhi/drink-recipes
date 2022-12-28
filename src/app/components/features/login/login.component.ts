@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
 import { Constants } from 'src/app/constants/constants';
 import { User } from 'src/app/models/User.model';
@@ -24,7 +25,7 @@ export class LoginComponent {
     environment.supabaseKey
   );
 
-  constructor(private commonUtils: CommonUtilitiesService) {}
+  constructor(private commonUtils: CommonUtilitiesService, private router: Router) {}
 
   ngOnInit(): void {}
 
@@ -62,9 +63,11 @@ export class LoginComponent {
         .select('*')
         .eq('fk_user_uid', userUid);
       console.log(data);
+      window.sessionStorage.setItem("userInfo", JSON.stringify(data))
       if (data && data.length > 0) {
         this.user = data[0];
-        this.commonUtils.setToastr(Constants.TOASTR_TYPE.SUCCESS, `Successfully logged in as ${this.user.first_name} ${this.user.last_name}`, 'Login')
+        this.commonUtils.setToastr(Constants.TOASTR_TYPE.SUCCESS, `Successfully logged in as ${this.user.first_name} ${this.user.last_name}`, 'Login');
+        this.router.navigate(['/recipes'])
       }
     }
   };

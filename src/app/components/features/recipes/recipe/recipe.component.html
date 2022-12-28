@@ -1,0 +1,38 @@
+<!-- <div class="card" *ngIf="recipe">
+    <div class="card-header">
+      {{recipe.title}}
+    </div>
+    <div class="card-body">
+      <p class="card-text">{{recipe.description}}</p>
+      <h6>INGREDIENTS</h6>
+      <ul>
+        <li *ngFor="let ingredient of recipe.ingredients">{{ingredient}}</li>
+      </ul>
+      <h6>DIRECTIONS</h6>
+      <p>{{recipe.directions}}</p>
+    </div>
+    <div class="card-footer text-muted">
+        {{recipe.last_modified}}
+    </div>
+  </div> -->
+
+  <div class="card border-dark mb-3" style="max-width: 540px;" *ngIf="recipe">
+    <div class="row g-0">
+      <div class="col-md-4">
+        <img src="https://via.placeholder.com/150x350" class="img-fluid rounded-start" alt="...">
+      </div>
+      <div class="col-md-8">
+        <div class="card-body">
+          <h5 class="card-title">{{recipe.title}}</h5>
+          <p class="card-text">{{recipe.description}}</p>
+          <h6>INGREDIENTS</h6>
+          <ul>
+            <li *ngFor="let ingredient of recipe.ingredients">{{ingredient}}</li>
+          </ul>
+          <h6>DIRECTIONS</h6>
+          <p>{{recipe.directions}}</p>
+          <p class="card-text float-end"><small class="text-muted">{{recipe.last_modified | date: 'MM/dd/yyyy hh:mm:a'}}</small></p>
+        </div>
+      </div>
+    </div>
+  </div>
