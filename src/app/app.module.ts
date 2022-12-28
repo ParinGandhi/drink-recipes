@@ -10,12 +10,14 @@ import { LoginComponent } from './components/features/login/login.component';
 import { FormsModule } from '@angular/forms';
 
 import { ToastrModule } from 'ngx-toastr';
+import { RecipesComponent } from './components/features/recipes/recipes.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
-    LoginComponent
+    LoginComponent,
+    RecipesComponent
   ],
   imports: [
     BrowserModule,
