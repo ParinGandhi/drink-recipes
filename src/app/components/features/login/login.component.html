@@ -1,0 +1,104 @@
+<div class="container mt-5">
+    <div class="row">
+      <div class="col-md-4 offset-md-4">
+        <div class="card shadow bg-body rounded">
+          <div class="card-header">
+            <ul class="nav nav-tabs card-header-tabs">
+              <li class="nav-item">
+                <a
+                  class="nav-link active"
+                  aria-current="true"
+                  id="login"
+                  (click)="changeTab('login')"
+                  >Login</a
+                >
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="signUp" (click)="changeTab('signUp')"
+                  >Sign up</a
+                >
+              </li>
+            </ul>
+          </div>
+          <div class="card-body">
+            <div *ngIf="tabSelection === 'login'">
+              <label for="email">Email</label>
+              <input
+                type="text"
+                class="form-control"
+                id="email"
+                [(ngModel)]="email"
+              />
+              <label for="password">Password</label>
+              <input
+                type="password"
+                class="form-control"
+                id="password"
+                [(ngModel)]="password"
+              />
+            </div>
+            <div *ngIf="tabSelection === 'signUp'">
+              <label for="firstName">First name</label>
+              <input
+                type="text"
+                class="form-control"
+                id="firstName"
+                [(ngModel)]="firstName"
+              />
+              <label for="lastName">Last name</label>
+              <input
+                type="text"
+                class="form-control"
+                id="lastName"
+                [(ngModel)]="lastName"
+              />
+              <label for="email">Email</label>
+              <input
+                type="text"
+                class="form-control"
+                id="email"
+                [(ngModel)]="email"
+              />
+              <label for="password">Password</label>
+              <input
+                type="password"
+                class="form-control"
+                id="password"
+                [(ngModel)]="password"
+              />
+              <label for="password">Confirm password</label>
+              <input
+                type="passwordMatch"
+                class="form-control"
+                id="passwordMatch"
+                [(ngModel)]="passwordMatch"
+              />
+            </div>
+          </div>
+          <div class="card-footer text-muted">
+            <button
+              *ngIf="tabSelection === 'login'"
+              class="btn btn-outline-primary"
+              (click)="login()"
+            >
+              Login
+            </button>
+            <button
+              *ngIf="tabSelection === 'signUp'"
+              class="btn btn-outline-success"
+              [disabled]="
+                password.toLowerCase().trim() !==
+                  passwordMatch.toLowerCase().trim() &&
+                password.toLowerCase().trim() !== '' &&
+                passwordMatch.toLowerCase().trim() !== ''
+              "
+              (click)="signUp()"
+            >
+              Create account
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
