@@ -2,7 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { Recipe } from 'src/app/models/Recipe.model';
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
 import { environment } from 'src/environments/environment';
-import { User } from 'src/app/models/User.model';
+import { IUser, User } from 'src/app/models/User.model';
+import { IUserState } from 'src/app/store/recipe.state';
+import { Store, select } from '@ngrx/store';
+import * as RecipeSelectors from 'src/app/store/recipe.selectors'
+import { setUserInfoAction } from 'src/app/store/recipe.actions';
 
 @Component({
   selector: 'app-recipes',
@@ -55,21 +59,35 @@ export class RecipesComponent implements OnInit {
   //   }
   // ]
 
-  constructor() {}
+  constructor(private store: Store<IUserState>) {}
 
   ngOnInit(): void {
-    let userInfo = window.sessionStorage.getItem("userInfo")
+    // let userInfo = window.sessionStorage.getItem("userInfo")
+    // if (userInfo) {
+    //   userInfo = JSON.parse(userInfo);
+    //   this.getRecipes(userInfo);
+    // }
+    this.store.select(RecipeSelectors.getUserInfoState).subscribe((recipeState) => {
+      let userInfo;
+      if (recipeState) {
+        userInfo = recipeState;
+        this.getRecipes(userInfo);
+      } else {
+        userInfo = window.sessionStorage.getItem("userInfo")
     if (userInfo) {
       userInfo = JSON.parse(userInfo);
+      this.store.dispatch(setUserInfoAction({userInfo: userInfo}));
       this.getRecipes(userInfo);
     }
+      }
+    })
   }
 
   getRecipes = async (userInfo: any) => {
     const { data, error } = await this.supaBase
     .from('recipes')
     .select('*')
-    .eq('fk_registered_user_id', userInfo[0].id);
+    .eq('fk_registered_user_id', userInfo.id);
   console.log(data);
   this.recipes = data;
   }

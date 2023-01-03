@@ -1,9 +1,12 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
 import { Constants } from 'src/app/constants/constants';
 import { User } from 'src/app/models/User.model';
 import { CommonUtilitiesService } from 'src/app/services/common-utilities.service';
+import { setUserInfoAction } from 'src/app/store/recipe.actions';
+import { IUserState } from 'src/app/store/recipe.state';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -25,7 +28,7 @@ export class LoginComponent {
     environment.supabaseKey
   );
 
-  constructor(private commonUtils: CommonUtilitiesService, private router: Router) {}
+  constructor(private commonUtils: CommonUtilitiesService, private router: Router, private store: Store<IUserState>) {}
 
   ngOnInit(): void {}
 
@@ -63,9 +66,11 @@ export class LoginComponent {
         .select('*')
         .eq('fk_user_uid', userUid);
       console.log(data);
-      window.sessionStorage.setItem("userInfo", JSON.stringify(data))
+      
       if (data && data.length > 0) {
         this.user = data[0];
+        window.sessionStorage.setItem("userInfo", JSON.stringify(this.user))
+        this.store.dispatch(setUserInfoAction({userInfo: this.user}));
         this.commonUtils.setToastr(Constants.TOASTR_TYPE.SUCCESS, `Successfully logged in as ${this.user.first_name} ${this.user.last_name}`, 'Login');
         this.router.navigate(['/recipes'])
       }
